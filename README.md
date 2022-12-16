@@ -4,8 +4,9 @@ This program is designed to take a set of steam32 ids and report back specific s
 The stats are pulled from Opendota API and are called per player, per match on a set interval to gather all possible matches.
 
 The code can be adapted easily by changing the `group_array` to the steam_ids that are desired, and the `range()` amount for the for-loop  in the main function.
+
 Idealy: 
-- the code will not record duplicates already in the csv
+- the code will not record a match ID or Steam ID pair that is already in the csv
 - `group_array` would have a atleast a single steam32 ID in it
 - `range()` would be set to 2 ( this is to catch any errors on the API's side)
 - code would run every 30 to 45 minutes from a cron job ( to catch even quick games )
