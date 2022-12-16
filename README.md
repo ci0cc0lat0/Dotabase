@@ -12,6 +12,14 @@ Idealy:
 - code would run every 30 to 45 minutes from a cron job ( to catch even quick games )
 - different stats could be collected if knowledge of the Opendota API is known
 
+## Description of functions
+- `pretty()` used to print out pretty json during debugging
+- `get_recent_match()` used to get the most recent match_ids from the specific steam_id given
+- `get_unrecorded_match()` used to return game data of the match and steam ID pairs not in csv
+- `get_recent_match_data()` used to return a dict of data from the "recentMatch" API call
+- `get_match_data()` used to return the extra data wanted not found int he "recentMatch" API call
+- `parse_match()` A helped function used in `get_match_data()` to parse a game if it needs parsing as that "extra data" is hidden behind an Opendota API parse
+
 ## The Flow of data
 ### Stage 0: Code write up
 The steps for acccessing the api and recording data is done.
