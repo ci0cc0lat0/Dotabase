@@ -21,7 +21,9 @@ def get_recent_match(steamid_array, match_index = 0):
     recent_match_array = []
     for steam_id in steamid_array:
         response = requests.get(f"https://api.opendota.com/api/players/{steam_id}/recentMatches")
+        time.sleep(1)
         data = response.json()
+        print(f"Game {match_index} for steamID: {steam_id}")
         data[match_index]["steam_id"] = steam_id
         recent_match_array.append(data[match_index])
     return recent_match_array 
@@ -85,7 +87,12 @@ def get_match_data(data_objects):
             player_index = obj_player_slot if obj_player_slot < 5 else obj_player_slot-123
             try:
                 response = requests.get(f'https://api.opendota.com/api/matches/{match_id}')
+                
                 data = response.json()
+
+                game_mode = data['game_mode']
+                if(game_mode != 22 | game_mode != 16 | game_mode != 4):
+                    break
 
                 apm = data['players'][player_index]["actions_per_min"]
                 time_spent_dead = data['players'][player_index]["life_state_dead"]
@@ -111,7 +118,7 @@ def parse_match(match_id):
     #parse_request = requests.post(parse_url)
     #parse_request_json = parse_request.json()
     #parse_job_id = parse_request_json['job']['jobId']
-    time.sleep(30)
+    time.sleep(20)
 
 def get_unrecorded_matches(match_object_array):
     unadded_match_objects = []
@@ -134,7 +141,7 @@ def main():
     'deaths','assists','xpm','gpm','hero_id',
     'duration','last_hits','lane','lane_role',
     'start_time','hero_damage','hero_healing','apm','time_spent_dead']
-    for i in range(10):
+    for i in range(20):
     
         with open('dota.csv', 'a') as file:
             writer = csv.DictWriter(file, fieldnames=data_header)

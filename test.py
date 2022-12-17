@@ -2,9 +2,9 @@ import requests
 import json
 
 match_index = 0
-working_matchID = 6914252885
+working_matchID = 6866858432
 # 6914252885 6914307843 1 0
-ant_recentMatch= f"https://api.opendota.com/api/players/118728071/recentMatches"
+ant_recentMatch= f"https://api.opendota.com/api/players/122334023/recentMatches"
 response = requests.get(ant_recentMatch)
 data = response.json()
 pretty_data = json.dumps(data[0], indent = 2)
@@ -40,14 +40,14 @@ print(test_slot)
 print(player_slot)
 
 ### PARSING
-parse_url = f'https://api.opendota.com/api/request/6912423974'
-parse_request = requests.post(parse_url)
-parse_request_json = parse_request.json()
-parse_job_id = parse_request_json['job']['jobId']
+#parse_url = f'https://api.opendota.com/api/request/6866858432'
+#parse_request = requests.post(parse_url)
+#parse_request_json = parse_request.json()
+#parse_job_id = parse_request_json['job']['jobId']
 #job_id = parse_request['job']['jobId']
-print(parse_job_id)
-parse_job = f'https://api.opendota.com/api/request/{parse_job_id}'
-print(parse_job)
+#print(parse_job_id)
+#parse_job = f'https://api.opendota.com/api/request/{parse_job_id}'
+#print(parse_job)
 
 ### matches api
 ant_matchData =  f'https://api.opendota.com/api/matches/{working_matchID}'
@@ -56,9 +56,10 @@ data_match = response_match.json()
 pretty_data_match = json.dumps(data_match, indent = 2)
 #print(pretty_data_match)
 #print(data_match)
-apm = data_match['players'][test_slot]["actions_per_min"]
-time_spent_dead = data_match['players'][test_slot]["life_state_dead"]
+#apm = data_match['players'][test_slot]["actions_per_min"]
+#time_spent_dead = data_match['players'][test_slot]["life_state_dead"]
+game_mode = data_match['game_mode']
 #patch = data_match['players'][test_slot]["patch"]
 
 #print(data_match['players'][player_slot]['player_slot'])
-print(apm, time_spent_dead)
+print(game_mode, game_mode)
