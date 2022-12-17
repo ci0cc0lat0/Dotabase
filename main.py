@@ -141,7 +141,7 @@ def main():
     'deaths','assists','xpm','gpm','hero_id',
     'duration','last_hits','lane','lane_role',
     'start_time','hero_damage','hero_healing','apm','time_spent_dead']
-    for i in range(20):
+    for i in range(2):
     
         with open('dota.csv', 'a') as file:
             writer = csv.DictWriter(file, fieldnames=data_header)
