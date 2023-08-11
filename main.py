@@ -29,9 +29,13 @@ def get_extra_data(match_obj):
 
             apm = data['players'][player_index]["actions_per_min"]
             time_spent_dead = data['players'][player_index]["life_state_dead"]
+            lane = data['players'][player_index]["lane"]
+            lane_role = data['players'][player_index]["lane_role"]
 
             match_obj['apm'] = apm
             match_obj["time_spent_dead"] = time_spent_dead
+            match_obj["lane_role"] = lane_role
+            match_obj["lane"] = lane
         except Exception as e:
             parse_match(match_id)
         else:
@@ -97,7 +101,7 @@ def is_duplicate(match_obj):
 
 def main():
     # ant gub json andy matt rawb josh milo
-    group_array = [118728071,112127522,122334023,106975318,110352369,171149001,380821421,133355068]
+    group_array = [92296574]
     data_header = [
     'steam_id','match_id','player_slot','kills',
     'deaths','assists','xpm','gpm','hero_id',
