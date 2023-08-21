@@ -4,9 +4,12 @@ import time
 import csv
 import pandas as pd
 
+# used to debugging and getting pretty json
 def pretty(json_object, indent = 4):
     print(json.dumps(json_object, indent = indent))
 
+# pulls the most recent matches (of 20) with basic data 
+# match_indext is the index of those 20 matches, 0 being the most recent
 def get_recentMatch_data(steam_id, match_index = 0):
     response = requests.get(f"https://api.opendota.com/api/players/{steam_id}/recentMatches")
     time.sleep(1)
@@ -15,6 +18,8 @@ def get_recentMatch_data(steam_id, match_index = 0):
     data[match_index]["steam_id"] = steam_id
     return data[match_index]
 
+# Get and append the extra data we wish to request from the match
+# This will halt as to get extra data, a parse on their end nees to occur
 def get_extra_data(match_obj):
     match_id = match_obj['match_id']
     player_slot = match_obj['player_slot']
@@ -42,6 +47,7 @@ def get_extra_data(match_obj):
             break
     return match_obj
 
+# we select only the data we want in our obj/dict
 def clean_match_data(match_obj):
     steam_id = match_obj['steam_id']
     match_id = match_obj['match_id']
@@ -84,11 +90,14 @@ def clean_match_data(match_obj):
         }
     return data_object
 
+# Parses the match
 def parse_match(match_id):
     parse_url = f'https://api.opendota.com/api/request/{match_id}'
     requests.post(parse_url)
     time.sleep(20)
 
+
+# returns true if composite key, steamid + matchid, is in csv
 def is_duplicate(match_obj):
         steamid = match_obj['steam_id']
         matchid = match_obj['match_id']
@@ -102,14 +111,19 @@ def is_duplicate(match_obj):
 def main():
     # ant gub json andy matt rawb josh milo
     group_array = [118728071,112127522,122334023,106975318,110352369,171149001,380821421,133355068]
+
+    # number of recent games to check
+    games_to_check = 2
+
+    # columns of the csv, matches the dict key order
     data_header = [
     'steam_id','match_id','player_slot','kills',
     'deaths','assists','xpm','gpm','hero_id',
     'duration','last_hits','lane','lane_role',
     'start_time','hero_damage','hero_healing','apm','time_spent_dead']
-
-    for i in range(2):
-        with open('dota.csv', 'a') as file:
+    
+    for i in range(games_to_check):
+        with open('dota.csv', 'a', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=data_header)
             if file.tell() == 0:
                 writer.writeheader()
@@ -122,7 +136,7 @@ def main():
             clean_data_dict = clean_match_data(full_data_dict)
             #pretty(clean_data_dict)
 
-            with open('dota.csv', 'a') as file:
+            with open('dota.csv', 'a', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=data_header)
                 writer.writerows([clean_data_dict])
                 file.close()
