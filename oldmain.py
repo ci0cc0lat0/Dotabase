@@ -87,9 +87,7 @@ def get_match_data(data_objects):
             player_index = obj_player_slot if obj_player_slot < 5 else obj_player_slot-123
             try:
                 response = requests.get(f'https://api.opendota.com/api/matches/{match_id}')
-                
                 data = response.json()
-
                 game_mode = data['game_mode']
                 if(game_mode != 22 | game_mode != 16 | game_mode != 4):
                     break

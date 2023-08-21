@@ -12,7 +12,9 @@ def pretty(json_object, indent = 4):
 # match_indext is the index of those 20 matches, 0 being the most recent
 def get_recentMatch_data(steam_id, match_index = 0):
     response = requests.get(f"https://api.opendota.com/api/players/{steam_id}/recentMatches")
-    time.sleep(1)
+
+    # self rate limit for large request
+    time.sleep(0.75)
     data = response.json()
     print(f"Game {match_index} for steamID: {steam_id}")
     data[match_index]["steam_id"] = steam_id
@@ -24,14 +26,16 @@ def get_extra_data(match_obj):
     match_id = match_obj['match_id']
     player_slot = match_obj['player_slot']
     player_index = player_slot if player_slot < 5 else player_slot-123
+    parse_counter = 0
     while True:
         try:
             response = requests.get(f'https://api.opendota.com/api/matches/{match_id}')
             data = response.json()
             game_mode = data['game_mode']
             if(game_mode != 22 | game_mode != 16 | game_mode != 4):
+                match_obj = {}
                 break
-
+            
             apm = data['players'][player_index]["actions_per_min"]
             time_spent_dead = data['players'][player_index]["life_state_dead"]
             lane = data['players'][player_index]["lane"]
@@ -41,14 +45,23 @@ def get_extra_data(match_obj):
             match_obj["time_spent_dead"] = time_spent_dead
             match_obj["lane_role"] = lane_role
             match_obj["lane"] = lane
+
         except Exception as e:
+            if parse_counter > 3:
+                match_obj = {}
+                break
             parse_match(match_id)
+            print("parse counter",parse_counter)
+            parse_counter += 1
+            
         else:
             break
     return match_obj
 
 # we select only the data we want in our obj/dict
 def clean_match_data(match_obj):
+    if not (match_obj): return match_obj
+
     steam_id = match_obj['steam_id']
     match_id = match_obj['match_id']
     player_slot = match_obj['player_slot']
@@ -111,7 +124,7 @@ def is_duplicate(match_obj):
 def main():
     # ant gub json andy matt rawb josh milo
     group_array = [118728071,112127522,122334023,106975318,110352369,171149001,380821421,133355068]
-
+    
     # number of recent games to check
     games_to_check = 2
 
@@ -134,6 +147,7 @@ def main():
             if is_duplicate(recent_match_dict): continue
             full_data_dict = get_extra_data(recent_match_dict)
             clean_data_dict = clean_match_data(full_data_dict)
+            if not clean_data_dict: continue
             #pretty(clean_data_dict)
 
             with open('dota.csv', 'a', newline='') as file:
