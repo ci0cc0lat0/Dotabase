@@ -14,7 +14,7 @@ def get_recentMatch_data(steam_id, match_index = 0):
     response = requests.get(f"https://api.opendota.com/api/players/{steam_id}/recentMatches")
 
     # self rate limit for large request
-    time.sleep(0.75)
+    time.sleep(1)
     data = response.json()
     print(f"Game {match_index} for steamID: {steam_id}")
     data[match_index]["steam_id"] = steam_id
@@ -47,7 +47,7 @@ def get_extra_data(match_obj):
             match_obj["lane"] = lane
 
         except Exception as e:
-            if parse_counter > 3:
+            if parse_counter > 2:
                 match_obj = {}
                 break
             parse_match(match_id)
