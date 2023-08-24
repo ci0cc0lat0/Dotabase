@@ -16,7 +16,7 @@ def get_recentMatch_data(steam_id, match_index = 0):
     # self rate limit for large request
     time.sleep(1)
     data = response.json()
-    print(f"Game {match_index} for steamID: {steam_id}")
+    print(f"Game {match_index} for steamID: {steam_id}, for matchID: {data[match_index]['match_id']}")
     data[match_index]["steam_id"] = steam_id
     return data[match_index]
 
@@ -111,12 +111,14 @@ def parse_match(match_id):
 
 
 # returns true if composite key, steamid + matchid, is in csv
-def is_duplicate(match_obj):
+def is_on_csv(match_obj):
         steamid = match_obj['steam_id']
         matchid = match_obj['match_id']
         df = pd.read_csv('dota.csv')
         df = df[['steam_id', 'match_id']]
         checked_table = df[(df['steam_id'] == steamid) & (df['match_id'] == matchid)]
+
+        # if empty table, no matching steam+match id
         if (checked_table.size == 0): return False
         else: return True
 
@@ -144,7 +146,7 @@ def main():
 
         for ids in group_array:
             recent_match_dict = get_recentMatch_data(ids,i)
-            if is_duplicate(recent_match_dict): continue
+            if is_on_csv(recent_match_dict): continue
             full_data_dict = get_extra_data(recent_match_dict)
             clean_data_dict = clean_match_data(full_data_dict)
             if not clean_data_dict: continue
