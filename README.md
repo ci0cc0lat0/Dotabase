@@ -12,7 +12,7 @@ The purpose is to collect a dataset to be used in a data science purpose to give
 ## Functions
 - `pretty(dict)` Used to print pretty jason
 - `parse_match(matchid)` Used to parse match on call
-- `is_duplicate(matchobj)` Used to check if composite key, steam32id and matchid is already saved to CSV
+- `is_on_csv(matchobj)` Used to check if composite key, steam32id and matchid is already saved to CSV
 - `get_recentMatch_data(steamid,match_index=0)` Used to get 1 of 20 most recent matches depending on the keywords arguement `match_index` that is defaulted to 0, ie the most recent match. Returns a dict, a so-call `matchobj`, that contains match data, along with steam32id and matchid. When ran in a for-loop, the `match_index` can be incremented to gather other recent matches, eg the second most recent match when `match_index = 1`
 - `full_data_dict(matchobj)` Used to get and append additonal data desired from match. Appends to the `matchobj` which will have a steam32id and a matchid to find match data requested. Will most likely parse match, calling `parse_match()`
 - `clean_data_dict(matchobj)` used to format the `matchobj` for *only* the data we desire. 
