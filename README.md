@@ -4,7 +4,7 @@
 
 Replace `group_array` with the list if steam32 ids that we wish to collect from.
 
-Set a cron job or fix a timer (however you see to do that) to run `main.py` on a set interval ( I set mine either to 45min or 60 min )
+Set a cron job or fixed a timer (however you see fit to do that) to run `main.py` on a set interval ( I set mine either to 45min or 60 min )
 
 To `use gather-script.py`, this must be done manually through a CLI or terminal. `python3 gather-script.py`. The point of this script is to collect many games from a single individual. To catch games missed or to a lot of data on someone new quickly.
 
