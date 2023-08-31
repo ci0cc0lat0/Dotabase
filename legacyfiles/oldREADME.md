@@ -1,15 +1,18 @@
 # Dotabase
-## Use and functionality
+## Use and functionality `gather-script.py`
+This code is ran by manual use in a CLI environment. Typically the `playerid` list in main would be very low if not one ( as to not go over the APIs limits) and would appended the the same CSV that `main.py` uses
+
+## Use and functionality `main.py`
 This program is designed to take a set of steam32 ids and report back specific stats from Dota 2 matches those players are in. 
 The stats are pulled from Opendota API and are called per player, per match on a set interval to gather all possible matches.
 
 The code can be adapted easily by changing the `group_array` to the steam_ids that are desired, and the `range()` amount for the for-loop  in the main function.
 
-Idealy: 
+**Idealy**: 
+- code would run every 30 to 45 minutes from a cron job ( to catch even quick games )
 - the code will not record a match ID or Steam ID pair that is already in the csv
 - `group_array` would have a atleast a single steam32 ID in it
-- `range()` would be set to 2 ( this is to catch any errors on the API's side)
-- code would run every 30 to 45 minutes from a cron job ( to catch even quick games )
+- `range()` would be set to 2 ( this is to catch any errors on the API's side, or quick games)
 - different stats could be collected if knowledge of the Opendota API is known
 
 ## Description of functions
