@@ -52,7 +52,6 @@ def get_extra_data(match_obj):
             match_obj['xp_per_min'] = xpm
             match_obj['gold_per_min'] = gpm
 
-
         except Exception as e:
             if parse_counter > 2:
                 match_obj = {}
