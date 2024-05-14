@@ -11,11 +11,14 @@ def pretty(json_object, indent = 4):
 # pulls the most recent matches (of 20) with basic data 
 # match_indext is the index of those 20 matches, 0 being the most recent
 def get_recentMatch_data(steam_id, match_index = 0):
+
     response = requests.get(f"https://api.opendota.com/api/players/{steam_id}/recentMatches")
 
     # self rate limit for large request
     time.sleep(1)
     data = response.json()
+    #pretty(data)
+    #print(f"match_index: {match_index}, matchID: {data[match_index]['match_id']}")
     print(f"Game {match_index} for steamID: {steam_id}, for matchID: {data[match_index]['match_id']}")
     data[match_index]["steam_id"] = steam_id
     return data[match_index]

@@ -125,13 +125,13 @@ def is_on_csv(match_obj):
         else: return True
 
 def main():
-    playerid = [112127522]
+    playerid = [110352369]
     data_header = [
     'steam_id','match_id','player_slot','kills',
     'deaths','assists','xpm','gpm','hero_id',
     'duration','last_hits','lane','lane_role',
     'start_time','hero_damage','hero_healing','apm','time_spent_dead']
-    games_to_check = 30
+    games_to_check = 80
 
     for i in range(games_to_check):
         for id in playerid:
