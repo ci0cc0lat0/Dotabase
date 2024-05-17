@@ -1,0 +1,1 @@
+insert into match select match_id, steam_id from stat;
