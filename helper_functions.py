@@ -22,6 +22,7 @@ def is_on_db(cur: sqlite3.Cursor,match_obj: dict) -> bool:
     '''Checks the match table against the given steam and match id. A return of False means the query length yeilded 0 meaning its not on the db yet.'''
     res = cur.execute(f"SELECT * FROM match WHERE steam_id={match_obj['steam_id']} AND match_id={match_obj['match_id']}")
     res = res.fetchall()
+    #print('is on db',res)
     if(len(res) == 0):
          return False
     else:
