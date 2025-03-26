@@ -34,7 +34,13 @@ def main():
     for i in range(0,games_to_check):
         for id in player_ids:
             init_obj = mf.inital_data(id,match_index=i)
+<<<<<<< HEAD
             if(hf.is_on_db(my_cur,init_obj)): continue # if true, skip rest of loop 
+=======
+            if(hf.is_on_db(cur,init_obj)):
+                #print(f"steam_id:{init_obj['steam_id']} and match_id{init_obj['match_id']} are in db")
+                continue # if true, skip rest of loop 
+>>>>>>> a6bd06d4d634fca411c6d7ae227ce077678c38f7
             full_obj = mf.get_extra_data(init_obj)
             clean_obj = mf.clean_match_data(full_obj)
             if not clean_obj: continue #I think incase parsing fails from get_extra_data
