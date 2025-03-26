@@ -34,7 +34,7 @@ def main():
     for i in range(0,games_to_check):
         for id in player_ids:
             init_obj = mf.inital_data(id,match_index=i)
-            if(hf.is_on_db(cur,init_obj)):
+            if(hf.is_on_db(my_cur,init_obj)):
                 #print(f"steam_id:{init_obj['steam_id']} and match_id{init_obj['match_id']} are in db")
                 continue # if true, skip rest of loop 
             full_obj = mf.get_extra_data(init_obj)

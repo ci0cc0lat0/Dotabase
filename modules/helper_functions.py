@@ -24,14 +24,9 @@ def is_on_csv(match_obj: dict):
 
 def is_on_db(cur: mysql.connector.cursor,match_obj: dict) -> bool:
     '''Checks the match table against the given steam and match id. A return of False means the query length yeilded 0 meaning its not on the db yet.'''
-<<<<<<< HEAD:modules/helper_functions.py
     cur.execute(f"SELECT * FROM matches WHERE steam_id={match_obj['steam_id']} AND match_id={match_obj['match_id']}")
     res = cur.fetchall()
-=======
-    res = cur.execute(f"SELECT * FROM match WHERE steam_id={match_obj['steam_id']} AND match_id={match_obj['match_id']}")
-    res = res.fetchall()
     #print('is on db',res)
->>>>>>> a6bd06d4d634fca411c6d7ae227ce077678c38f7:helper_functions.py
     if(len(res) == 0):
          return False
     else:
